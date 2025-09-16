@@ -1,0 +1,41 @@
+{
+  "farmers": [
+    { "id": "FARMER1", "name": "Asha Patil", "gps": { "lat": 19.12, "lng": 73.51 } },
+    { "id": "FARMER2", "name": "Ravi Deshmukh", "gps": { "lat": 19.15, "lng": 73.53 } },
+    { "id": "FARMER3", "name": "Sunita Kale", "gps": { "lat": 19.18, "lng": 73.55 } },
+    { "id": "FARMER4", "name": "Ganesh Pawar", "gps": { "lat": 19.20, "lng": 73.57 } },
+    { "id": "FARMER5", "name": "Meena Shinde", "gps": { "lat": 19.22, "lng": 73.59 } }
+  ],
+  "processor": { "id": "PROC1", "name": "Ayurveda Processing Facility" },
+  "lab": { "id": "LAB1", "name": "HerbTest Labs" },
+  "manufacturer": { "id": "MAN1", "name": "Herbal Remedies Ltd." },
+  "events": {
+    "collectionEvent": {
+      "id": "COLASHWA1",
+      "gps": { "lat": 19.12, "lng": 73.51 },
+      "timestamp": "2025-11-01T10:00:00Z",
+      "species": "Withania somnifera",
+      "collectorId": "FARMER1",
+      "quality": { "moisture": 8.5, "pesticide": false, "dnaBarcode": true }
+    },
+    "processingStep": {
+      "id": "PROCASHWA1",
+      "stepType": "Drying",
+      "details": "Sun-dried for 3 days",
+      "timestamp": "2025-11-03T10:00:00Z",
+      "operatorId": "PROC1"
+    },
+    "qualityTest": {
+      "id": "LABASHWA1",
+      "labId": "LAB1",
+      "testType": "HPTLC",
+      "results": { "marker": "Withaferin A", "value": 0.5 },
+      "certificateHash": "Qm123abc..."
+    },
+    "provenance": {
+      "batchId": "BATCHASHWA1",
+      "linkedEvents": ["COLASHWA1", "PROCASHWA1", "LABASHWA1"],
+      "finalProductDetails": { "name": "Ashwagandha Capsules", "packDate": "2025-11-10" }
+    }
+  }
+}
