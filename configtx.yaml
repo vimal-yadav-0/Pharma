@@ -1,0 +1,96 @@
+Organizations:
+  - &OrdererOrg
+    Name: OrdererOrg
+    ID: OrdererMSP
+    MSPDir: crypto-config/ordererOrganizations/example.com/msp
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: "OR('OrdererMSP.member')"
+      Writers:
+        Type: Signature
+        Rule: "OR('OrdererMSP.member')"
+      Admins:
+        Type: Signature
+        Rule: "OR('OrdererMSP.admin')"
+
+  - &FarmersCoop
+    Name: FarmersCoopMSP
+    ID: FarmersCoopMSP
+    MSPDir: crypto-config/peerOrganizations/farmerscoop.example.com/msp
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: "OR('FarmersCoopMSP.admin', 'FarmersCoopMSP.peer', 'FarmersCoopMSP.client')"
+      Writers:
+        Type: Signature
+        Rule: "OR('FarmersCoopMSP.admin', 'FarmersCoopMSP.client')"
+      Admins:
+        Type: Signature
+        Rule: "OR('FarmersCoopMSP.admin')"
+
+  - &ProcessingFacility
+    Name: ProcessingFacilityMSP
+    ID: ProcessingFacilityMSP
+    MSPDir: crypto-config/peerOrganizations/processingfacility.example.com/msp
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: "OR('ProcessingFacilityMSP.admin', 'ProcessingFacilityMSP.peer', 'ProcessingFacilityMSP.client')"
+      Writers:
+        Type: Signature
+        Rule: "OR('ProcessingFacilityMSP.admin', 'ProcessingFacilityMSP.client')"
+      Admins:
+        Type: Signature
+        Rule: "OR('ProcessingFacilityMSP.admin')"
+
+  - &Manufacturer
+    Name: ManufacturerMSP
+    ID: ManufacturerMSP
+    MSPDir: crypto-config/peerOrganizations/manufacturer.example.com/msp
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: "OR('ManufacturerMSP.admin', 'ManufacturerMSP.peer', 'ManufacturerMSP.client')"
+      Writers:
+        Type: Signature
+        Rule: "OR('ManufacturerMSP.admin', 'ManufacturerMSP.client')"
+      Admins:
+        Type: Signature
+        Rule: "OR('ManufacturerMSP.admin')"
+
+Orderer: &OrdererDefaults
+  OrdererType: solo
+  Addresses:
+    - orderer.example.com:7050
+  BatchTimeout: 2s
+  BatchSize:
+    MaxMessageCount: 10
+    AbsoluteMaxBytes: 99 MB
+    PreferredMaxBytes: 512 KB
+  Organizations:
+    - *OrdererOrg
+
+Application: &ApplicationDefaults
+  Organizations:
+
+Profiles:
+  HerbChannel:
+    Consortium: SampleConsortium
+    Application:
+      <<: *ApplicationDefaults
+      Organizations:
+        - *FarmersCoop
+        - *ProcessingFacility
+        - *Manufacturer
+  OrdererGenesis:
+    Orderer:
+      <<: *OrdererDefaults
+      Organizations:
+        - *OrdererOrg
+    Consortiums:
+      SampleConsortium:
+        Organizations:
+          - *FarmersCoop
+          - *ProcessingFacility
+          - *Manufacturer
