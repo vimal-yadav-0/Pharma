@@ -1,0 +1,16 @@
+{
+  "name": "herb-traceability-chaincode",
+  "version": "1.0.0",
+  "description": "Hyperledger Fabric chaincode for Ayurvedic herb traceability",
+  "main": "dist/herbTraceability.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "fabric-chaincode-node start"
+  },
+  "dependencies": {
+    "fabric-contract-api": "^2.4.1"
+  },
+  "devDependencies": {
+    "typescript": "^4.9.5"
+  }
+}
